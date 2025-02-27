@@ -43,10 +43,6 @@ Galaxy Shooter is a 2D space-themed shooter game created with **Unity**, where y
    - Press **Esc** to quit the game.
    - If you lose (Game Over), press **R** to restart the game.
 
-## Known Performance Issue: Sideways Movement Animation Lag
-
-On lower-end systems with lower FPS, the sideways movement animation may experience lag or stutter. This happens because the animation rendering is dependent on the frame rate, and when the FPS is too low, it can affect the smoothness of the animation.
-
 ## Created By
 
 This project was created by **Shubham Kar**.

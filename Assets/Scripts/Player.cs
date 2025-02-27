@@ -66,7 +66,6 @@ public class Player : MonoBehaviour {
     // Update is called once per frame
     void Update() {
         handleMovement();
-        handleMovementAnimation();
 
         if(Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire) {
             instantiateLaser();
@@ -77,6 +76,8 @@ public class Player : MonoBehaviour {
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
         Vector3 direction = new Vector3(horizontalInput, verticalInput, 0);
+
+        handleMovementAnimation(horizontalInput);
 
         transform.Translate(direction * (_speed * _speedMultiplier) * Time.deltaTime);
 
@@ -89,13 +90,16 @@ public class Player : MonoBehaviour {
         transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, -3.8f, 2.5f), 0);
     }
 
-    void handleMovementAnimation() {
-        if(Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A)) {
-            _anim.SetTrigger("onPlayerTurnLeft");
-        } else if(Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D)) {
-            _anim.SetTrigger("onPlayerTurnRight");
-        } else if(Input.GetKeyUp(KeyCode.LeftArrow) || Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.RightArrow) || Input.GetKeyUp(KeyCode.D)) {
-            _anim.SetTrigger("onPlayerDefault");
+    void handleMovementAnimation(float horizontalInput) {
+        if (horizontalInput < 0) {
+            _anim.SetBool("isMovingLeft", true);
+            _anim.SetBool("isMovingRight", false);
+        } else if (horizontalInput > 0) {
+            _anim.SetBool("isMovingLeft", false);
+            _anim.SetBool("isMovingRight", true);
+        } else {
+            _anim.SetBool("isMovingLeft", false);
+            _anim.SetBool("isMovingRight", false);
         }
     }
 
