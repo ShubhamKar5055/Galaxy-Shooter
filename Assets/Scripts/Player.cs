@@ -201,12 +201,11 @@ public class Player : MonoBehaviour {
         _shieldVisualizer.SetActive(false);
     }
 
-    public int getScore() {
-        return _score;
-    }
-
     public void updateScore(int points) {
         _score += points;
         _uiManager.updateScoreText(_score);
+        if((_score % 100) == 0 && _score != 0 && _score <= 500) {
+            _gameManager.incrementGameDifficulty();
+        }
     }
 }

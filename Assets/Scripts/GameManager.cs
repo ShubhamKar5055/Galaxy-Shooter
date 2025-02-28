@@ -5,8 +5,6 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour {
     [SerializeField]
     private float _gameDifficulty = 50.0f;
-    private bool _isDifficultyIncremented;
-    private Player _player;
     private UIManager _uiManager;
     private SpawnManager _spawnManager;
     private float remainingTime = 30.0f; // 30 seconds
@@ -15,11 +13,6 @@ public class GameManager : MonoBehaviour {
 
     // Start is called before the first frame update
     void Start() {
-        _player = GameObject.Find("Player").GetComponent<Player>();
-        if(_player == null) {
-            Debug.LogError("The Player is NULL.");
-        }
-
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
         if(_uiManager == null) {
             Debug.LogError("The UI Manager is NULL.");
@@ -33,17 +26,6 @@ public class GameManager : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        int playerScore = _player.getScore();
-        if((playerScore % 100) == 0 && playerScore != 0 && playerScore <= 500) {
-            if(!_isDifficultyIncremented) {
-                incrementGameDifficulty(); // Game Difficulty Increments for every 100 points
-                _uiManager.updateDifficultyText();
-                _isDifficultyIncremented = true;
-            }
-        } else {
-            _isDifficultyIncremented = false;
-        }
-
         if(Input.GetKeyDown(KeyCode.R) && _isGameOver == true) {
             SceneManager.LoadScene(1); // Current Game Scene
         }
@@ -57,8 +39,10 @@ public class GameManager : MonoBehaviour {
         return _gameDifficulty;
     }
 
-    void incrementGameDifficulty() {
+    // Game Difficulty Increments for every 100 points
+    public void incrementGameDifficulty() {
         _gameDifficulty += 10.0f;
+        _uiManager.updateDifficultyText();
     }
 
     public string timer() {

@@ -48,7 +48,7 @@ public class SpawnManager : MonoBehaviour {
     IEnumerator spawnPowerUpRoutine() {
         yield return new WaitForSeconds(2.0f);
 
-        while(!_stopSpawning) {
+        while(!_stopSpawning && _gameManager.getGameDifficulty() != 100f) {
             GameObject powerUpPrefab = _powerUpPrefabs[Random.Range(0,3)];
             Vector3 posToSpawn = new Vector3(Random.Range(-8.0f, 8.0f), 7.0f, 0);
             Instantiate(powerUpPrefab, posToSpawn, Quaternion.identity);

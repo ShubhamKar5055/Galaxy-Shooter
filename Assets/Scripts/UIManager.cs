@@ -52,13 +52,14 @@ public class UIManager : MonoBehaviour {
 
     public void updateScoreText(int playerScore) {
         _scoreText.text = "Score: " + playerScore.ToString();
-        if(playerScore == 500) {
-            enableTimerText();
-        }
     }
 
     public void updateDifficultyText() {
-        _difficultyText.text = "Difficulty: " + _gameManager.getGameDifficulty().ToString() + "%";
+        float gameDifficulty =  _gameManager.getGameDifficulty();
+        _difficultyText.text = "Difficulty: " + gameDifficulty.ToString() + "%";
+        if(gameDifficulty == 100f) {
+            enableTimerText();
+        }
     }
 
     public void updateLivesDisplayImage(int currentLives) {
